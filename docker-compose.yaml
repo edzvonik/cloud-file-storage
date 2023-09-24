@@ -1,15 +1,15 @@
 version: '3.7'
 
 services:
-  app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      database:
-        condition: service_healthy
+#  app:
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      database:
+#        condition: service_healthy
 
   database:
     image: postgres:14

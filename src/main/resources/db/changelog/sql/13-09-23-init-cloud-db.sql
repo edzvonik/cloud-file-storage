@@ -2,16 +2,15 @@
 
 --changeSet edzvonik:1
 CREATE TABLE USERS (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     username VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
-    role VARCHAR NOT NULL,
     enabled BOOLEAN NOT NULL
 );
 
 CREATE TABLE ROLE (
     id INT PRIMARY KEY,
-    name VARCHAR NOT NULL
+    name VARCHAR NOT NULL UNIQUE
 );
 
 CREATE TABLE USERS_ROLES (

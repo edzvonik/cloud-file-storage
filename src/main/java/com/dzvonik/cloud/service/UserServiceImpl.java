@@ -3,37 +3,37 @@ package com.dzvonik.cloud.service;
 import com.dzvonik.cloud.model.Role;
 import com.dzvonik.cloud.model.User;
 import com.dzvonik.cloud.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("Пользователь с именем " + username + " не найден"));
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                mapRolesToAuthorities(user.getRoles())
-        );
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    @Override
+    public void save(String username, String password) {
+        Role role = roleService.findByName("ROLE_USER");
+
+        User user = User.builder()
+                .username(username)
+                .password(passwordEncoder.encode(password))
+                .enabled(true)
+                .roles(Arrays.asList(role))
+                .build();
+
+        userRepository.save(user);
     }
+
 }
