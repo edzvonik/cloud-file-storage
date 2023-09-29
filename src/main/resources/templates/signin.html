@@ -14,12 +14,11 @@
                     <div class="card-body">
                         <h3 class="card-title text-center">Sign In</h3>
 
-                        <!-- Проверка на ошибку и выход -->
                         <div th:if="${param.error}" class="alert alert-danger">
-                            Invalid username and password.
+                            Invalid username and password
                         </div>
                         <div th:if="${param.logout}" class="alert alert-success">
-                            You have been logged out.
+                            You have been logged out
                         </div>
 
                         <form th:action="@{/auth/signin}" method="post">
@@ -31,11 +30,6 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                             </div>
-<!--                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>-->
-<!--                            or-->
-<!--                            <a th:href="@{/auth/signup}" class="btn btn-secondary">Sign Up</a>-->
-
-<!--                            <a th:href="@{/home}" class="btn btn-secondary ml-auto">Back</a>-->
                             <div class="d-flex">
                                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                 <div class="align-self-center mx-2"> or </div>
@@ -43,6 +37,7 @@
                                 <a th:href="@{/home}" class="btn btn-secondary ms-auto">Back</a>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

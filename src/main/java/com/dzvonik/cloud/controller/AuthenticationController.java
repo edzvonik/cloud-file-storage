@@ -19,12 +19,12 @@ public class AuthenticationController {
     private final UserService userService;
 
     @GetMapping("/signin")
-    public String signinForm(Model model) {
+    public String signInForm(Model model) {
         return "signin";
     }
 
     @PostMapping("/signin")
-    public String signin(@RequestParam("username") String username,
+    public String signIn(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         Model model) {
         boolean isAuthenticated = authenticationService.authenticate(username, password);
@@ -37,16 +37,15 @@ public class AuthenticationController {
     }
 
     @GetMapping("/signup")
-    public String registrationForm(Model model) {
+    public String signUpForm(Model model) {
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String registerUser(@RequestParam("username") String username,
+    public String signUpUser(@RequestParam("username") String username,
                                @RequestParam("password") String password,
                                Model model) {
-        boolean isExist = userService.existsByUsername(username); // Проверка на существование пользователя
-        if (!isExist) {
+        if (!userService.existsByUsername(username)) {
             userService.save(username, password);
             return "redirect:/auth/signin";
         } else {

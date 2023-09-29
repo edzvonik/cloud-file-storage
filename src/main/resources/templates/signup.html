@@ -14,9 +14,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">Sign Up</h3>
-                        <div th:if="${param.error}">
+
+                        <div th:if="${error}" class="alert alert-danger">
                             User already exist
                         </div>
+
                         <form th:action="@{/auth/signup}" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -35,6 +37,7 @@
                                 <a th:href="@{/home}" class="btn btn-secondary ms-auto">Back</a>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
