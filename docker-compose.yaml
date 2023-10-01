@@ -11,6 +11,31 @@ services:
 #      database:
 #        condition: service_healthy
 
+  minio:
+    image: minio/minio
+    container_name: minio
+    command: server /data
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio_data:/data
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+
+  minio-console:
+    image: minio/mc
+    container_name: minio-console
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set minio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb minio/files;
+      /usr/bin/mc policy set public minio/files;
+      exit 0;
+      "
+    depends_on:
+      - minio
+
   database:
     image: postgres:14
     volumes:
@@ -29,3 +54,4 @@ services:
 
 volumes:
   postgres_data:
+  minio_data:
