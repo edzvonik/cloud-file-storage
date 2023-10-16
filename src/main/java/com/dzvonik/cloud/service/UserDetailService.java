@@ -25,7 +25,7 @@ public class UserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("Пользователь с именем " + username + " не найден"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User with username: " + username + " not found"));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

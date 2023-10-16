@@ -21,7 +21,7 @@ public class AuthenticationService {
             SecurityContextHolder.getContext().setAuthentication(authenticationUser);
             return true;
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Неверные логин или пароль", e);
+            throw new BadCredentialsException("Incorrect login or password", e);
         }
     }
 

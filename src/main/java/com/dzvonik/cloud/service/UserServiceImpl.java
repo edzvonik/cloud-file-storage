@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
+    private final MinioService minioService;
 
     @Override
     public boolean existsByUsername(String username) {
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         userRepository.save(user);
+        // minioService.createUserFolder(username);
     }
 
 }
