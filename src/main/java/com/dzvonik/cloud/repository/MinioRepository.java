@@ -14,34 +14,26 @@ import java.util.List;
 
 public interface MinioRepository {
 
-    byte[] readFileAsBytes(String filePath);
+    byte[] readObjectAsBytes(String objectPath);
 
-    void writeBytesToFile(String filePath, byte[] data);
+    void writeBytesToObject(String objectPath, byte[] data);
 
-    void copyFile(String sourcePath, String destinationPath);
+    void copyObject(String sourcePath, String destinationPath);
 
-    void moveFile(String sourcePath, String destinationPath);
+    void moveObject(String sourcePath, String destinationPath);
 
-    void deleteFile(String filePath);
+    void deleteObject(String objectPath);
 
-    boolean fileExists(String filePath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException;
+    boolean objectExists(String objectPath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException;
 
-    long getFileSize(String filePath);
+    long getObjectSize(String objectPath);
 
-    void createDirectory(String directoryPath);
+    void createObject(String objectPath);
 
-    void deleteDirectory(String directoryPath);
+    List<String> listObjects(String objectsPath);
 
-    List<String> listFilesInDirectory(String directoryPath);
+    void downloadObject(String sourceURL, String destinationPath);
 
-    void moveDirectory(String sourcePath, String destinationPath);
-
-    boolean directoryExists(String directoryPath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException;
-
-    long getDirectorySize(String directoryPath);
-
-    void downloadFile(String sourceURL, String destinationPath);
-
-    void uploadFile(String sourcePath, String destinationURL);
+    void uploadObject(String sourcePath, String destinationURL);
 
 }

@@ -71,12 +71,4 @@ public class MinioService {
         );
     }
 
-    // todo: create obj (folder / file)
-    // todo: delete obj
-    // todo: move
-    // todo: duplicate
-    // todo: get obj list
-    // todo: download
-    // todo: upload
-
 }

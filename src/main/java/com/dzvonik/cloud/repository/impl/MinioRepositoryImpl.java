@@ -28,102 +28,65 @@ public class MinioRepositoryImpl implements MinioRepository {
     private final MinioClient minioClient;
 
     @Override
-    public byte[] readFileAsBytes(String filePath) {
+    public boolean objectExists(String objectPath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+        StatObjectResponse response = minioClient.statObject(
+                StatObjectArgs
+                        .builder()
+                        .bucket(ROOT_BUCKET)
+                        .object("/" + objectPath)
+                        .build()
+        );
+
+        return response != null;
+    }
+
+    @Override
+    public byte[] readObjectAsBytes(String objectPath) {
         return new byte[0];
     }
 
     @Override
-    public void writeBytesToFile(String filePath, byte[] data) {
+    public void writeBytesToObject(String objectPath, byte[] data) {
 
     }
 
     @Override
-    public void copyFile(String sourcePath, String destinationPath) {
+    public void copyObject(String sourcePath, String destinationPath) {
 
     }
 
     @Override
-    public void moveFile(String sourcePath, String destinationPath) {
+    public void moveObject(String sourcePath, String destinationPath) {
 
     }
 
     @Override
-    public void deleteFile(String filePath) {
+    public void deleteObject(String objectPath) {
 
     }
 
     @Override
-    public boolean fileExists(String filePath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
-        StatObjectResponse response = minioClient.statObject(
-                StatObjectArgs
-                        .builder()
-                        .bucket(ROOT_BUCKET)
-                        .object("/" + filePath)
-                        .build()
-        );
-
-        return response != null;
-    }
-
-    @Override
-    public long getFileSize(String filePath) {
+    public long getObjectSize(String objectPath) {
         return 0;
     }
 
     @Override
-    public void createDirectory(String directoryPath) {
-//        String objectName = String.join("/", directoryPath, "/");
-//
-//        if ()
-//        minioClient.putObject(
-//                PutObjectArgs.builder()
-//                        .bucket(ROOT_BUCKET)
-//                        .object(objectName)
-//                        .stream(new ByteArrayInputStream(new byte[]{}), 0, -1)
-//                        .build()
-//        );
-    }
-
-    @Override
-    public void deleteDirectory(String directoryPath) {
+    public void createObject(String objectPath) {
 
     }
 
     @Override
-    public List<String> listFilesInDirectory(String directoryPath) {
+    public List<String> listObjects(String objectsPath) {
         return null;
     }
 
     @Override
-    public void moveDirectory(String sourcePath, String destinationPath) {
+    public void downloadObject(String sourceURL, String destinationPath) {
 
     }
 
     @Override
-    public boolean directoryExists(String directoryPath) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
-        StatObjectResponse response = minioClient.statObject(
-                StatObjectArgs
-                        .builder()
-                        .bucket(ROOT_BUCKET)
-                        .object("/" + directoryPath + "/")
-                        .build()
-        );
-
-        return response != null;
-    }
-
-    @Override
-    public long getDirectorySize(String directoryPath) {
-        return 0;
-    }
-
-    @Override
-    public void downloadFile(String sourceURL, String destinationPath) {
-
-    }
-
-    @Override
-    public void uploadFile(String sourcePath, String destinationURL) {
+    public void uploadObject(String sourcePath, String destinationURL) {
 
     }
 

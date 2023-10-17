@@ -86,67 +86,33 @@ public class MinioIntegrationTest {
 
     @Test
     void testFileExistsWhenObjectExists() throws Exception {
-        String objectName = "test-object";
+        String objectPath = "test-object";
         minioClient.putObject(
                 PutObjectArgs
                         .builder()
                         .bucket(ROOT_BUCKET)
-                        .object(objectName)
+                        .object(objectPath)
                         .stream(new ByteArrayInputStream(new byte[]{}), 0, -1)
                         .build()
         );
 
-        boolean exists = minioRepository.fileExists(objectName);
+        boolean exists = minioRepository.objectExists(objectPath);
 
         assertTrue(exists);
     }
 
     @Test
-    void testFileExistsWhenObjectDoesNotExists() throws Exception {
-        String filePath = "non-existing-file.txt";
+    void testFileExistsWhenObjectDoesNotExists() {
+        String objectPath = "non-existing-object.txt";
 
         ErrorResponseException exception = assertThrows(ErrorResponseException.class, () -> {
-            minioRepository.fileExists(filePath);
+            minioRepository.objectExists(objectPath);
         });
 
         assertEquals("Object does not exist", exception.errorResponse().message());
         assertEquals("NoSuchKey", exception.errorResponse().code());
     }
 
-//    @Test
-//    public void whenUserCreatedThenCreateUserFolder() throws Exception {
-//        minioRepository.("user123");
-//
-//        String objectName = String.join("/", "user123", "/");
-//        StatObjectResponse response = minioClient.statObject(
-//                StatObjectArgs.builder()
-//                        .bucket(ROOT_BUCKET)
-//                        .object(objectName)
-//                        .build()
-//        );
-//
-//        assertTrue(response != null);
-//    }
-//
-//    @Test
-//    public void whenGetAllObjectsThenReturnList() {
-//        minioService.createUserFolder("user124");
-//        minioService.createObject("user124", "documents");
-//        minioService.createObject("user124", "images");
-//
-//        String documents = String.join("/", "user123", "/");
-//        StatObjectResponse response = minioClient.statObject(
-//                StatObjectArgs.builder()
-//                        .bucket(ROOT_BUCKET)
-//                        .object(objectName)
-//                        .build()
-//        );
-//        StatObjectResponse response = minioClient.statObject(
-//                StatObjectArgs.builder()
-//                        .bucket(ROOT_BUCKET)
-//                        .object(objectName)
-//                        .build()
-//        );
-//    }
+
 
 }
